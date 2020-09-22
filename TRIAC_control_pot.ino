@@ -23,14 +23,12 @@ void setup() {
      -D (digital pins 0 to 7)   
   //All Arduino (Atmega) digital pins are inputs when you begin...
   */  
-   
-  //PCICR |= (1 << PCIE0);    //enable PCMSK0 scan                                                 
-  //PCMSK0 |= (1 << PCINT0);  //Set pin D8 trigger an interrupt on state change. Input from optocoupler
-  pinMode(DIAC_PIN,OUTPUT);        //Define D3 as output for the DIAC pulse
+  pinMode(DIAC_PIN,OUTPUT);        //Define output for the DIAC pulse
 
   pinMode(OPTO_PIN, INPUT_PULLUP);
   attachInterrupt(OPTO_PIN, ISR, CHANGE);
-//  Serial.begin(9600);
+  
+  //Serial.begin(9600);
 }
 
 void loop() {

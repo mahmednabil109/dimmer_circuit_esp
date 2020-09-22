@@ -26,7 +26,8 @@ void setup() {
   */  
   pinMode(DIAC_PIN,OUTPUT);        //Define output for the DIAC pulse
 
-  pinMode(OPTO_PIN, INPUT_PULLDOWN);
+  pinMode(OPTO_PIN, INPUT);   //NOTE: ESP32 has internar pulldown resistors
+                              //its recommended to use internal resistor instead of external one
   attachInterrupt(OPTO_PIN, ISR, CHANGE);
   
   //Serial.begin(9600);

@@ -26,7 +26,7 @@ void setup() {
   */  
   pinMode(DIAC_PIN,OUTPUT);        //Define output for the DIAC pulse
 
-  pinMode(OPTO_PIN, INPUT_PULLUP);
+  pinMode(OPTO_PIN, INPUT_PULLDOWN);
   attachInterrupt(OPTO_PIN, ISR, CHANGE);
   
   //Serial.begin(9600);

@@ -5,6 +5,7 @@
  * @edit: this is a modified version to be compatible with esp32
 */
 
+//edit to suit your board
 #define OPTO_PIN 19
 #define DIAC_PIN 2
 #define POT_PIN 34

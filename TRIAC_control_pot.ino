@@ -6,14 +6,14 @@
 */
 
 //edit these values to suit your board
-#define OPTO_PIN 19
-#define DIAC_PIN 2
-#define POT_PIN 34
-#define ADC_MAX 4096
+#define OPTO_PIN 3  // you have to make sure that the pin is an interrupt if not the attachInterrupt would not work <---
+#define DIAC_PIN 4
+#define POT_PIN A0
+#define ADC_MAX 1024
 
-int detectado = 0;
-int valor=0;
-int last_CH1_state = 0; 
+volatile int detectado = 0;
+volatile int valor=0;
+volatile int last_CH1_state = 0; 
 
 void setup() {
   /*
@@ -28,10 +28,12 @@ void setup() {
 
   pinMode(OPTO_PIN, INPUT);   //NOTE: ESP32 has internar pulldown resistors
                               //its recommended to use internal resistor instead of external one
-  attachInterrupt(OPTO_PIN, ISR, CHANGE);
+  attachInterrupt(digitalPinToInterrupt(OPTO_PIN), task, CHANGE); // it's recommended to use digitalPinToInterrupt <--
   
-  //Serial.begin(9600);
+//  Serial.begin(9600);
 }
+
+
 
 void loop() {
    //Read the value of the pot and map it from 10 to 10.000 us. AC frequency is 50Hz, so period is 20ms. We want to control the power
@@ -53,11 +55,10 @@ void loop() {
 
 
 
-
 //This is the interruption routine
 //----------------------------------------------
 
-void ISR(){
+void task(){ // ISR is a reserved word <--
   /////////////////////////////////////               //Input from optocoupler
   if(digitalRead(OPTO_PIN)){                           //We make an AND with the pin state register, We verify if pin 8 is HIGH???
     if(last_CH1_state == 0){                          //If the last state was 0, then we have a state change...
@@ -70,3 +71,5 @@ void ISR(){
     last_CH1_state = 0;                               //Store the current state into the last state for the next loop
     }
 }
+
+
